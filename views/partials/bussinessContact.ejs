@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/index.css' />
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+  <script src="/javascripts/jquery.min.js"></script>
+  <script src="/javascripts/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <div class="header">
+    <%- include("header") %>
+  </div>
+  <div class="content bussiness-contact-content">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th class="align-center">Name</th>
+          <th class="align-center">Number</th>
+          <th class="align-center">Address</th>
+          <th class="align-center">Operations</th>
+        </tr>
+      </thead>
+      <tbody id="tbody">
+      </tbody>
+    </table>
+
+    <button type="button" class="btn btn-primary" id="add" data-toggle="modal" data-target="#mymodal">Add</button>
+  </div>
+  <div class="modal fade" id="mymodal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+              class="sr-only">Close</span></button>
+          <h4 class="modal-title" id="modalTitle"></h4>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Contact Name <span class="error-msg error-name">Please fill in contact
+                  name</span>
+              </label>
+              <input type="text" class="form-control" id="name" placeholder="name">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Contact Number <span class="error-msg error-number">Please fill in contact
+                  number</span></label>
+              <input type="text" class="form-control" id="number" placeholder="number">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email address <span class="error-msg error-email">Please fill in email
+                  address</span></label>
+              <input type="email" class="form-control" id="email" placeholder="eamil">
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" id="delete">Delete</button>
+          <button type="button" class="btn btn-primary" id="save">Save</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+</body>
+<script src="/javascripts/header.js"></script>
+<script>
+  let mode = ''; // update or add
+  let tableData = []
+
+  function getUserInfo() {
+    if (!localStorage.getItem('userInfo')) {
+      window.location.href = "login";
+      return 0
+    }
+    userInfo = JSON.parse(localStorage.getItem('userInfo'))
+
+  }
+  getUserInfo();
+
+  function queryTableData() {
+    tableData = []
+    $('#tbody').html('')
+    $.ajax({
+      url: 'bussinessContact/list',
+      type: 'get',
+      success: function (data) {
+        tableData = data.data.filter(v => v.userId === userInfo.user._id)
+        tableData = tableData.sort(function (a, b) {
+          return (a.name + '').localeCompare(b.name + '')
+        })
+        // sort tableData by Initial
+        tableData.forEach((item, index) => {
+          let tr = document.createElement('tr');
+          let tdName = document.createElement('td');
+          tdName.classList.add('align-center')
+          tdName.innerHTML = item.name
+
+          let tdNumber = document.createElement('td');
+          tdNumber.classList.add('align-center')
+          tdNumber.innerHTML = item.number
+
+          let tdEmail = document.createElement('td');
+          tdEmail.classList.add('align-center')
+          tdEmail.innerHTML = item.emailAddress
+
+          let tdOperation = document.createElement('td');
+          tdOperation.classList.add('align-center')
+          let btnUpdate = document.createElement('button');
+          btnUpdate.className = `update btn btn-sm btn-default table-row-update ${index}`
+          btnUpdate.innerHTML = 'update'
+          btnUpdate.setAttribute('data-toggle', 'modal')
+          btnUpdate.setAttribute('data-target', '#mymodal')
+          btnUpdate.setAttribute('type', '#button')
+
+          let btnRemove = document.createElement('button');
+          btnRemove.className = `remove btn btn-sm btn-danger table-row-remove ${index}`
+          btnRemove.innerHTML = 'remove'
+          tdOperation.append(btnUpdate)
+          tdOperation.append(btnRemove)
+          tr.append(tdName)
+          tr.append(tdNumber)
+          tr.append(tdEmail)
+          tr.append(tdOperation)
+          $('#tbody').append(tr)
+        })
+
+        $('.update').click((e) => {
+          rowindex = Number(e.target.classList[e.target.classList.length - 1])
+          $('#modalTitle').html('Update Data')
+          $('#delete').show()
+          mode = 'update'
+          // get current table row
+          currentRow = tableData[rowindex]
+          console.log(currentRow)
+          $('#name').val(currentRow.name)
+          $('#number').val(currentRow.number)
+          $('#email').val(currentRow.emailAddress)
+        })
+
+        $('.remove').click((e) => {
+          rowindex = Number(e.target.classList[e.target.classList.length - 1])
+          currentRow = tableData[rowindex]
+          deleteData()
+        })
+      }
+    })
+  }
+
+  queryTableData()
+  // click add buttin
+  $('#add').click(() => {
+    $('#name').val('')
+    $('#number').val('')
+    $('#email').val('')
+    $('#modalTitle').html('Add Data')
+    $('#delete').hide()
+    mode = 'add'
+  })
+
+  //  add/update modal click save button
+  $('#save').click(() => {
+    if (!$('#name').val()) {
+      $('.error-name').show()
+      return
+    }
+
+    if (!$('#number').val()) {
+      $('.error-number').show()
+      return
+    }
+
+    if (!$('#email').val()) {
+      $('.error-email').show()
+      return
+    }
+    // add data interface
+    if (mode === 'add') {
+      $.ajax({
+        url: 'bussinessContact/list/add',
+        type: 'post',
+        data: {
+          name: $('#name').val(),
+          number: $('#number').val(),
+          emailAddress: $('#email').val(),
+          userId: userInfo.user._id
+        },
+        success: function (data) {
+          if (data.code === 200) {
+            // after add successfully clear form data
+            $('#name').val('')
+            $('#number').val('')
+            $('#email').val('')
+            // close modal
+            $('#mymodal').modal('hide')
+            // refresh table data
+            queryTableData()
+          } else {
+            const msg = data.msg[0].msg
+            $('.error-msg').html(msg)
+          }
+        }
+      })
+    } else {
+      $.ajax({
+        url: `bussinessContact/list/${currentRow._id}`,
+        type: 'post',
+        data: {
+          name: $('#name').val(),
+          number: $('#number').val(),
+          emailAddress: $('#email').val(),
+          userId: userInfo.user._id
+        },
+        success: function (data) {
+          // clear form data
+          $('#name').val('')
+          $('#number').val('')
+          $('#email').val('')
+          // refresh table data
+          $('#mymodal').modal('hide')
+          // refresh table data
+          queryTableData()
+        }
+      })
+    }
+  })
+
+  function deleteData() {
+    $.ajax({
+      url: `bussinessContact/list/${currentRow._id}`,
+      type: 'delete',
+      data: {
+        name: $('#name').val(),
+        number: $('#number').val(),
+        emailAddress: $('#email').val(),
+        userId: userInfo.user._id
+      },
+      success: function (data) {
+        if (mode === 'update') {
+          $('#mymodal').modal('hide')
+        }
+        queryTableData()
+        currentRow = {}
+      }
+    })
+  }
+
+  $('#delete').click(() => {
+    deleteData()
+  })
+</script>
+
+</html>

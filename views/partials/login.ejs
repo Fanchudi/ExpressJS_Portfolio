@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/login.css' />
+  <script src="/javascripts/jquery.min.js"></script>
+  <script src="/javascripts/ejs.min.js"></script>
+</head>
+
+<body>
+  <div class="login-wrapper" id="loginWrapper">
+    <div class="header">Login</div>
+    <div class="form-wrapper">
+      <input type="text" name="username" placeholder="username" class="input-item user">
+      <input type="password" name="password" placeholder="password" class="input-item pwd">
+      <div class="btn" id="login">Login</div>
+    </div>
+    <div class="msg">
+      Don't have account?
+      <a href="#" id="toSignup">Sign up</a>
+    </div>
+    <div class="error-msg"></div>
+  </div>
+  <div class="login-wrapper" id="signupWrapper">
+    <div class="header">Sign up</div>
+    <div class="form-wrapper">
+      <input type="text" name="username" placeholder="username" class="input-item user-signup">
+      <input type="password" name="password" placeholder="password" class="input-item pwd-signup">
+      <input type="password" name="passwordRepeat" placeholder="repeat password" class="input-item pwd-signup-repeat">
+      <input type="text" name="email" placeholder="email address" class="input-item email">
+      <div class="btn" id="signup">Sign up</div>
+    </div>
+    <div class="msg">
+      If you have account?
+      <a href="#" id="toLogin">Login</a>
+    </div>
+    <div class="error-msg-signup"></div>
+  </div>
+
+</body>
+<script>
+  // click login button
+  $('#login').click(() => {
+    // check username
+    if (!$('.user').val()) {
+      $('.error-msg').html('Please fill in the username')
+      return
+    }
+    if (!$('.pwd').val()) {
+      $('.error-msg').html('Please fill in the password')
+      return
+    }
+    $.ajax({
+      url: 'login/login',
+      type: 'post',
+      data: {
+        username: $('.user').val(),
+        password: $('.pwd').val(),
+      },
+      success: function (data) {
+        console.log(data)
+        if (data.code === 200) {
+          // if login, redirect to Business Contact page
+          window.location.href = "bussinessContact";
+          localStorage.setItem('userInfo', JSON.stringify(data))
+        } else {
+          const msg = data.msg[0].msg
+          $('.error-msg').html(msg)
+        }
+      }
+    })
+  })
+
+  // login page to sign up page
+  $('#toSignup').click(() => {
+    $('#loginWrapper').hide()
+    $('#signupWrapper').show()
+    $('.error-msg').hide()
+  })
+
+  // sign up page back to login page
+  $('#toLogin').click(() => {
+    $('#loginWrapper').show()
+    $('#signupWrapper').hide()
+    $('.error-msg-signup').hide()
+  })
+
+  // sign up
+  $('#signup').click(() => {
+    // check all info filled in
+    if (!$('.user-signup').val()) {
+      $('.error-msg').html('Please fill in the username')
+      return
+    }
+    if (!$('.pwd-signup').val()) {
+      $('.error-msg').html('Please fill in the password')
+      return
+    }
+    if (!$('.pwd-signup-repeat').val()) {
+      $('.error-msg').html('Please fill in the repeat password')
+      return
+    }
+    // two times password are same
+    if ($('.pwd-signup').val() != $('.pwd-signup-repeat').val()) {
+      $('.error-msg').html('The two passwords are inconsistent')
+      return
+    }
+    if (!$('.email').val()) {
+      $('.error-msg').html('Please fill in the email address')
+      return
+    }
+
+    // do signup
+    $.ajax({
+      url: 'login/signup',
+      type: 'post',
+      data: {
+        username: $('.user-signup').val(),
+        password: $('.pwd-signup').val(),
+        emailAddress: $('.email').val()
+      },
+      success: function (data) {
+        console.log(data)
+        if (data.code === 200) {
+          // success
+          $('.error-msg-signup').html('Successful registration, please go to login')
+        } else {
+          // error message
+          const msg = data.msg[0].msg
+          $('.error-msg-signup').html(msg)
+        }
+      }
+    })
+  })
+</script>
+
+</html>

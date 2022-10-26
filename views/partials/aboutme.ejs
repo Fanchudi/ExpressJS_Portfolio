@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/index.css' />
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+  <script src="/javascripts/jquery.min.js"></script>
+  <script src="/javascripts/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <div class="header">
+    <%- include("header") %>
+  </div>
+  <div class="content">
+    <h3 style="line-height: 40px;">My name is Laurier, I am studying game programming at Centennial College.
+      What to know more, please download my <span class="resume">resume</span>.</h3>
+  </div>
+</body>
+<script src="/javascripts/header.js"></script>
+<script>
+  // resume download pdf
+  $('.resume').click(() => {
+    window.open("/files/resume.pdf")
+  })
+</script>
+
+</html>

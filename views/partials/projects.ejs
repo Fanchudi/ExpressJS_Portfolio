@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/index.css' />
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+  <script src="/javascripts/jquery.min.js"></script>
+  <script src="/javascripts/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <div class="header">
+    <%- include("header") %>
+  </div>
+  <div class="content">
+    <div class="each-project">
+      <img src="/images/project_1_image.png" alt="">
+      <div>
+        <div>Python Web Scraping</div>
+        <ul class="ul">
+          <li>Implemented 4 pages scraping with Selenium</li>
+          <li>Created BeautifulSoup framework to parse and extract movie information</li>
+          <li>Stored scraped data into csv/xlsx file using Python built-in function</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="each-project">
+      <img src="/images/project_2_image.png" alt="">
+      <div>
+        <div>Python Web Scraping</div>
+        <ul class="ul">
+          <li>Created fixed market campaign analysis report by using Python Pandas DataFrame</li>
+          <li>Loaded and merged data from multiple sources; Created summary statistics with Pandas</li>
+          <li>Detected and conducted missing value imputation on different variables using sklearn</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="each-project">
+      <img src="/images/project_3_image.png" alt="">
+      <div>
+        <div>SAS2Python</div>
+        <ul class="ul">
+          <li>Facilitated web design, including web framework, UI/UX, SEO, and web logo</li>
+          <li>Conducted data validation for 150 tables, performed function mapping and code mapping between two
+            programming languages (SQL and Python) for comparison by using Python and MS Excel</li>
+          <li>Contributed to the key contents of the website by scripting SQL codes with MySQL for more than 80
+            application contents and functions</li>
+          <li>Supported programming estimates, identified potential problems, and recommended alternative solutions to
+            ensure the web development project finish on time</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="/javascripts/header.js"></script>
+
+</html>

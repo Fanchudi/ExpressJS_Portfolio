@@ -1,0 +1,161 @@
+/**
+ * index.css
+ *
+ * This is a css file, used for pages including homepage, about me, 
+ * projects, services, contact me, business contacts
+ * 
+ * Student Name: 
+ * Student ID: 
+ * Date: 
+ */
+
+/* General properties: header */
+.header>div,
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.header {
+  width: 90%;
+  margin: 0 auto;
+  justify-content: space-between;
+  border-bottom: 1px solid black;
+}
+
+.header img {
+  width: 100px;
+  border-radius: 50%;
+}
+
+.right-border {
+  border-right: 1px solid black;
+  padding: 5px 14px;
+}
+
+.header-logout {
+  padding: 5px 14px;
+}
+
+.menu {
+  cursor: pointer;
+}
+
+.content {
+  width: 80%;
+  margin: 50px auto;
+}
+
+.menu-focus {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+/* homepage css */
+.homepage-about-me {
+  cursor: pointer;
+  text-decoration: underline;
+  color: blue;
+}
+
+
+/* aboutme css */
+.resume {
+  cursor: pointer;
+  background: #7dbadc;
+}
+
+/* projects css */
+.each-project {
+  display: flex;
+  margin-bottom: 50px;
+}
+.each-project img {
+  width: 300px;
+  height: 200px;
+  margin-right: 20px;
+}
+
+.each-project>div>div {
+  font-size: 20px;
+  font-weight: bold;
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+.ul li {
+  margin-bottom: 10px;
+}
+
+/* services css */
+.each-service {
+  margin-bottom: 50px;
+}
+
+.each-service div {
+  font-size: 18px;
+}
+
+/* contact me css */
+.contant-me-head .email {
+  color: blueviolet;
+}
+.contant-me-head .each-form {
+  display: flex;
+  line-height: 30px;
+  margin-bottom: 10px;
+}
+
+.contant-me-head .each-form div {
+  width: 100px;
+  text-align: right;
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.submit-btn {
+  float: right;
+  padding: 4px;
+  font-size: 16px !important;
+  text-align: center !important;
+  border: 1px solid black;
+  border-radius: 4px;
+  margin-right: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.contact-me-content {
+  width: 400px!important;
+}
+
+/* bussiness contact css */
+.bussiness-contact-content {
+  width: 600px!important;
+
+}
+
+.align-center {
+  text-align: center;
+}
+
+.table {
+  margin-bottom: 20px;
+}
+
+.error-msg{
+  color: red;
+  display: none;
+}
+
+.table-row-update {
+  margin-right: 10px;
+}
+
+li {
+  font-size: 18px;
+}
+
+h3 {
+  font-weight: bold!important;
+}
