@@ -3,9 +3,10 @@
  *
  * general model of database
  * 
- * Student Name: 
- * Student ID: 
- * Date: 
+ * Student Name: Chuqi Fan
+ * Student ID: 301090064
+ * Date: 2022-10-20
+ *
  */
 
 module.exports = {

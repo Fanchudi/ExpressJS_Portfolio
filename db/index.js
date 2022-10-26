@@ -3,9 +3,9 @@
  *
  * Connect and manage MongoDB database
  * 
- * Student Name: 
- * Student ID: 
- * Date: 
+ * Student Name: Chuqi Fan
+ * Student ID: 301090064
+ * Date: 2022-10-20
  */
 
 // import mongoose

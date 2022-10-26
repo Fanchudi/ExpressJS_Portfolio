@@ -3,9 +3,9 @@
  *
  * Scheme of database for website users
  * 
- * Student Name: 
- * Student ID: 
- * Date: 
+ * Student Name: Chuqi Fan
+ * Student ID: 301090064
+ * Date: 2022-10-20
  */
 //database user model
 const mongoose = require("mongoose");

@@ -2,11 +2,10 @@
  * App.js
  *
  * This file creates an express application naed as app.
- * Student Name: 
- * Student ID: 
- * Date: 
+ * Student Name: Chuqi Fan
+ * Student ID: 301090064
+ * Date: 2022-10-20
  */
-
 
 var createError = require("http-errors");
 var express = require("express");

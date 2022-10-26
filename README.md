@@ -1,6 +1,6 @@
-# Create a web App using ExpressJS and NodeJS
+# Create a Web App using ExpressJS and NodeJS
 
-This is an assignment project to create a webApp using ExpressJS and Node.js, it includes serveral pages, and credential areas for logined users, and it will be deployed to a could server whose IP is 137.220.54.112, so you can see the demo from 137.220.54.112:3000.
+This is an assignment project to create a webApp using ExpressJS and Node.js, it includes serveral pages, and credential areas for logined users, and it will be deployed to a could server whose IP is 137.220.54.112, so you can see the demo from http://137.220.54.112:3000.
 
 ## Requirements:
 
